@@ -7,6 +7,12 @@ const tracks = [
   { id: '7xXTTLY5GVknapMWY6qxtO', title: 'O.D.' },
 ];
 
+const videos = [
+  { id: 'hrAKBqgm0Qc', title: 'Highway' },
+  { id: '1BCGSNBn5zU', title: 'O.D.' },
+  { id: 'Z88ocrYlTZ4', title: 'Jekyll/Experiment' },
+];
+
 const socialLinks = [
   {
     href: 'https://www.instagram.com/stoneyday/?utm_source=ig_web_button_share_sheet',
@@ -81,6 +87,63 @@ export default function Home() {
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
           />
+        ))}
+      </div>
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 116,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 'min(92vw, 400px)',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+          gap: 10,
+          zIndex: 1,
+        }}
+      >
+        {videos.map(video => (
+          <button
+            key={video.id}
+            onClick={() => window.open(`https://youtu.be/${video.id}`, '_blank', 'noopener,noreferrer')}
+            aria-label={video.title}
+            style={{
+              position: 'relative',
+              width: '100%',
+              minWidth: 0,
+              height: 68,
+              padding: 0,
+              margin: 0,
+              border: 'none',
+              borderRadius: 10,
+              overflow: 'hidden',
+              cursor: 'pointer',
+              background: 'none',
+              transition: 'transform 0.2s',
+            }}
+            onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.04)')}
+            onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
+          >
+            <img
+              src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+              alt={video.title}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            <span
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'rgba(0,0,0,0.28)',
+              }}
+            >
+              <svg width={18} height={18} viewBox="0 0 24 24" fill="white">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </span>
+          </button>
         ))}
       </div>
       <div
