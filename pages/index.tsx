@@ -1,6 +1,11 @@
 import Image from 'next/image';
+import Script from 'next/script';
+import { useEffect, useRef, useState } from 'react';
 
 const iconSize = 32;
+
+const vimeoId = '1208595632';
+const vimeoHash = 'b8870e3c7b';
 
 const socialLinks = [
   {
@@ -51,15 +56,63 @@ const socialLinks = [
 ];
 
 export default function Home() {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    function initPlayer() {
+      const Vimeo = (window as any).Vimeo;
+      if (!Vimeo || !iframeRef.current) return;
+      const player = new Vimeo.Player(iframeRef.current);
+      player
+        .ready()
+        .then(() => player.getDuration())
+        .then((duration: number) => {
+          const randomStart = Math.random() * Math.max(duration - 3, 0);
+          return player.setCurrentTime(randomStart);
+        })
+        .then(() => {
+          if (cancelled) return;
+          player.play();
+          setVideoReady(true);
+        })
+        .catch(() => {
+          // leave the image fallback visible if the video fails to load
+        });
+    }
+
+    if ((window as any).Vimeo) {
+      initPlayer();
+    } else {
+      const interval = setInterval(() => {
+        if ((window as any).Vimeo) {
+          clearInterval(interval);
+          initPlayer();
+        }
+      }, 100);
+      return () => {
+        cancelled = true;
+        clearInterval(interval);
+      };
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <>
+      <Script src="https://player.vimeo.com/api/player.js" />
       <div style={{
         position: 'fixed',
         top: 0,
         left: 0,
         width: '100vw',
         height: '100vh',
-        zIndex: -1,
+        zIndex: -2,
         overflow: 'hidden',
       }}>
         <Image
@@ -68,6 +121,39 @@ export default function Home() {
           layout="fill"
           objectFit="cover"
           priority
+        />
+      </div>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: -1,
+          overflow: 'hidden',
+          pointerEvents: 'none',
+          opacity: videoReady ? 1 : 0,
+          transition: 'opacity 0.8s ease',
+        }}
+      >
+        <iframe
+          ref={iframeRef}
+          src={`https://player.vimeo.com/video/${vimeoId}?h=${vimeoHash}&badge=0&autopause=0&player_id=0&app_id=58479&background=1&autoplay=1&muted=1&loop=1`}
+          title="Britney Stoney - Missin U"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '236.67vh',
+            height: '100vh',
+            minWidth: '100vw',
+            minHeight: '42.25vw',
+            transform: 'translate(-50%, -50%)',
+            border: 'none',
+          }}
         />
       </div>
       <div
