@@ -2,6 +2,11 @@ import Image from 'next/image';
 
 const iconSize = 32;
 
+const tracks = [
+  { id: '44WxetHXSTxjpkTYbaRLMb', title: 'Missin U' },
+  { id: '7xXTTLY5GVknapMWY6qxtO', title: 'O.D.' },
+];
+
 const socialLinks = [
   {
     href: 'https://www.instagram.com/stoneyday/?utm_source=ig_web_button_share_sheet',
@@ -51,6 +56,32 @@ export default function Home() {
           objectFit="cover"
           priority
         />
+      </div>
+      <div
+        style={{
+          position: 'fixed',
+          top: 32,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 'min(92vw, 400px)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 12,
+          zIndex: 1,
+        }}
+      >
+        {tracks.map(track => (
+          <iframe
+            key={track.id}
+            title={track.title}
+            src={`https://open.spotify.com/embed/album/${track.id}?utm_source=generator&theme=0`}
+            width="100%"
+            height="152"
+            style={{ borderRadius: 12, border: 'none' }}
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          />
+        ))}
       </div>
       <div
         style={{
