@@ -2,17 +2,6 @@ import Image from 'next/image';
 
 const iconSize = 32;
 
-const tracks = [
-  { id: '44WxetHXSTxjpkTYbaRLMb', title: 'Missin U' },
-  { id: '7xXTTLY5GVknapMWY6qxtO', title: 'O.D.' },
-];
-
-const videos = [
-  { id: 'hrAKBqgm0Qc', title: 'Highway' },
-  { id: '1BCGSNBn5zU', title: 'O.D.' },
-  { id: 'Z88ocrYlTZ4', title: 'Jekyll/Experiment' },
-];
-
 const socialLinks = [
   {
     href: 'https://www.instagram.com/stoneyday/?utm_source=ig_web_button_share_sheet',
@@ -41,6 +30,24 @@ const socialLinks = [
       </svg>
     ),
   },
+  {
+    href: 'https://music.apple.com/us/artist/britney-stoney/509508224',
+    label: 'Apple Music',
+    svg: (
+      <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+      </svg>
+    ),
+  },
+  {
+    href: 'https://open.spotify.com/artist/1NrCzxQBuoRoh8q1ZRq83X',
+    label: 'Spotify',
+    svg: (
+      <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.59 14.42a.62.62 0 0 1-.85.21c-2.33-1.42-5.26-1.74-8.72-.96a.622.622 0 1 1-.28-1.213c3.79-.867 7.04-.494 9.65 1.1.3.183.39.57.2.86zm1.22-2.72a.78.78 0 0 1-1.07.26c-2.67-1.64-6.74-2.12-9.9-1.16a.782.782 0 1 1-.45-1.497c3.61-1.096 8.1-.565 11.17 1.32.36.22.48.7.25 1.077zm.1-2.83C14.29 8.9 9.2 8.72 6.24 9.63a.936.936 0 1 1-.54-1.793c3.4-1.03 9.06-.83 12.63 1.29a.936.936 0 1 1-.96 1.6z"/>
+      </svg>
+    ),
+  },
 ];
 
 export default function Home() {
@@ -62,89 +69,6 @@ export default function Home() {
           objectFit="cover"
           priority
         />
-      </div>
-      <div
-        style={{
-          position: 'fixed',
-          top: 32,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: 'min(92vw, 400px)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 12,
-          zIndex: 1,
-        }}
-      >
-        {tracks.map(track => (
-          <iframe
-            key={track.id}
-            title={track.title}
-            src={`https://open.spotify.com/embed/album/${track.id}?utm_source=generator&theme=0`}
-            width="100%"
-            height="152"
-            style={{ borderRadius: 12, border: 'none' }}
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-          />
-        ))}
-      </div>
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 116,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: 'min(92vw, 400px)',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-          gap: 10,
-          zIndex: 1,
-        }}
-      >
-        {videos.map(video => (
-          <button
-            key={video.id}
-            onClick={() => window.open(`https://youtu.be/${video.id}`, '_blank', 'noopener,noreferrer')}
-            aria-label={video.title}
-            style={{
-              position: 'relative',
-              width: '100%',
-              minWidth: 0,
-              height: 68,
-              padding: 0,
-              margin: 0,
-              border: 'none',
-              borderRadius: 10,
-              overflow: 'hidden',
-              cursor: 'pointer',
-              background: 'none',
-              transition: 'transform 0.2s',
-            }}
-            onMouseOver={e => (e.currentTarget.style.transform = 'scale(1.04)')}
-            onMouseOut={e => (e.currentTarget.style.transform = 'scale(1)')}
-          >
-            <img
-              src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
-              alt={video.title}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-            <span
-              style={{
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'rgba(0,0,0,0.28)',
-              }}
-            >
-              <svg width={18} height={18} viewBox="0 0 24 24" fill="white">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-          </button>
-        ))}
       </div>
       <div
         style={{
