@@ -1,6 +1,11 @@
 import Head from 'next/head';
+import Script from 'next/script';
+import { useEffect, useRef } from 'react';
 
 const iconSize = 24;
+
+const vimeoId = '1208595632';
+const vimeoHash = 'b8870e3c7b';
 
 const socialLinks = [
   {
@@ -51,6 +56,40 @@ const socialLinks = [
 ];
 
 export default function Home() {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    let retryTimer: ReturnType<typeof setTimeout>;
+
+    function initPlayer() {
+      const Vimeo = (window as any).Vimeo;
+      if (!Vimeo || !iframeRef.current) {
+        retryTimer = setTimeout(initPlayer, 100);
+        return;
+      }
+      const player = new Vimeo.Player(iframeRef.current);
+      player
+        .ready()
+        .then(() => player.getDuration())
+        .then((duration: number) => {
+          if (cancelled) return;
+          const randomStart = Math.random() * Math.max(duration - 3, 0);
+          return player.setCurrentTime(randomStart).then(() => player.play());
+        })
+        .catch(() => {
+          // video still autoplays from 0:00 via the iframe's own URL params
+        });
+    }
+
+    initPlayer();
+
+    return () => {
+      cancelled = true;
+      clearTimeout(retryTimer);
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -62,7 +101,9 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://www.stoney.day/og-image.jpg" />
       </Head>
+      <Script src="https://player.vimeo.com/api/player.js" />
       <div
+        className="bg-photo"
         style={{
           position: 'fixed',
           top: 0,
@@ -74,6 +115,51 @@ export default function Home() {
           pointerEvents: 'none',
         }}
       />
+      <div
+        className="bg-video"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: -1,
+          overflow: 'hidden',
+          background: '#000',
+          pointerEvents: 'none',
+        }}
+      >
+        <iframe
+          ref={iframeRef}
+          src={`https://player.vimeo.com/video/${vimeoId}?h=${vimeoHash}&badge=0&autopause=0&player_id=0&app_id=58479&background=1&autoplay=1&muted=1&loop=1&playsinline=1`}
+          title="Britney Stoney - Missin U"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '236.67vh',
+            height: '100vh',
+            minWidth: '100vw',
+            minHeight: '42.25vw',
+            transform: 'translate(-50%, -50%)',
+            border: 'none',
+          }}
+        />
+      </div>
+      <style jsx>{`
+        @media (max-width: 767px) {
+          .bg-video {
+            display: none;
+          }
+        }
+        @media (min-width: 768px) {
+          .bg-photo {
+            display: none;
+          }
+        }
+      `}</style>
       <div
         style={{
           position: 'fixed',
