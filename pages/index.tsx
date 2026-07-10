@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Script from 'next/script';
 import { useEffect, useRef } from 'react';
 
@@ -91,6 +92,15 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Britney Stoney</title>
+        <meta property="og:title" content="Britney Stoney" />
+        <meta property="og:image" content="https://www.stoney.day/og-image.jpg" />
+        <meta property="og:url" content="https://www.stoney.day" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://www.stoney.day/og-image.jpg" />
+      </Head>
       <Script src="https://player.vimeo.com/api/player.js" />
       <div
         style={{
