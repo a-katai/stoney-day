@@ -117,7 +117,7 @@ export default function Home() {
       >
         <iframe
           ref={iframeRef}
-          src={`https://player.vimeo.com/video/${vimeoId}?h=${vimeoHash}&badge=0&autopause=0&player_id=0&app_id=58479&background=1&autoplay=1&muted=1&loop=1`}
+          src={`https://player.vimeo.com/video/${vimeoId}?h=${vimeoHash}&badge=0&autopause=0&player_id=0&app_id=58479&background=1&autoplay=1&muted=1&loop=1&playsinline=1`}
           title="Britney Stoney - Missin U"
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
