@@ -1,7 +1,7 @@
 import Script from 'next/script';
 import { useEffect, useRef } from 'react';
 
-const iconSize = 32;
+const iconSize = 24;
 
 const vimeoId = '1208595632';
 const vimeoHash = 'b8870e3c7b';
