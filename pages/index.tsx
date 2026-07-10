@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Script from 'next/script';
 import { useEffect, useRef } from 'react';
 
@@ -93,23 +92,6 @@ export default function Home() {
   return (
     <>
       <Script src="https://player.vimeo.com/api/player.js" />
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        zIndex: -2,
-        overflow: 'hidden',
-      }}>
-        <Image
-          src="/DMT02846.TIF"
-          alt="Background"
-          layout="fill"
-          objectFit="cover"
-          priority
-        />
-      </div>
       <div
         style={{
           position: 'fixed',
@@ -119,6 +101,7 @@ export default function Home() {
           height: '100vh',
           zIndex: -1,
           overflow: 'hidden',
+          background: '#000',
           pointerEvents: 'none',
         }}
       >
